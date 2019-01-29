@@ -16,6 +16,9 @@ The valid_input function() verifies that the inputs can be converted into floats
 and that the values are greater than 0 and less than 100.
 """
 
+# Library Imports
+import statistics as s
+
 
 def valid_input(number):
     """ This function takes any input and tries to convert it into a float. If
@@ -28,8 +31,6 @@ def valid_input(number):
     try:
         converted_input = float(number)
     except ValueError:
-        print("You have entered an invalid value. Please enter an integer " \
-              "or float greater than 0 and less than 100.")
         return False
 
     if converted_input > 0 and converted_input < 100:
@@ -51,3 +52,44 @@ def bad_classify_triangle(side1, side2, side3):
         return "Isoceles"
     else:
         "Not A Triangle"
+
+
+def classify_triangle(side1, side2, side3):
+    """ The classify_triangle() function takes three inputs, the three sides
+    of a triangle, and returns "Equilateral" if all three sides are equal, "Isoceles"
+    if two sides are equal, "Scalene" if none of the sides are equal, "Not A Triangle"
+    if the sum of two of the sides is less than the length of the third side, and
+    "Right" if the sum of the square of two of the sides equals the square of the 
+    remaining side. """
+
+    validated_side1 = round(valid_input(side1), 1)
+    validated_side2 = round(valid_input(side2), 1)
+    validated_side3 = round(valid_input(side3), 1)
+
+    if validated_side1 != False and validated_side2 != False and validated_side3 != False:
+        largest_side = max(validated_side1, validated_side2, validated_side3)
+        smallest_side = min(validated_side1, validated_side2, validated_side3)
+        middle_side = s.median([validated_side1, validated_side2, validated_side3])
+
+        if round(smallest_side, 1) + round(middle_side, 1) > round(largest_side, 1):
+            result = "Triangle"
+        else:
+            result = "Not A Triangle"
+
+        if result == "Triangle":
+            if validated_side1 == validated_side2 and validated_side1 == validated_side3:
+                classification = "Equilateral"
+            elif side1 == side2 or side1 == side3 or side2 == side3:
+                classification = "Scalene"
+            elif round((smallest_side ** 2), 1) + round((middle_side ** 2), 1) == round((largest_side ** 2), 1):
+                classification = "Right"
+            else:
+                classification = "Isoceles"
+            
+            return classification
+
+        else:
+            return result
+    
+    else:
+        return "One of your inputs in invalid. Please enter three integers or floats."
