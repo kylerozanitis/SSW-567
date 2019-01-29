@@ -3,11 +3,12 @@ This program contains three functions: classify_triange(), bad_classify_triangle
 and valid_input(). 
 
 The classify_triangle() function takes three inputs, the three sides
-of a triangle, and returns "Equilateral" if all three sides are equal, "Isoceles"
-if two sides are equal, "Scalene" if none of the sides are equal, "Not A Triangle"
-if the sum of two of the sides is less than the length of the third side, and
-"Right" if the sum of the square of two of the sides equals the square of the 
-remaining side.  
+of a triangle, and returns "Equilateral" if all three sides are equal, "Isosceles"
+if two sides are equal, "Scalene" if none of the sides are equal and "Not A Triangle"
+if the sum of two of the sides is less than the length of the third side.
+Additionally, the function adds " and Right" to an Isosceles or Scalene triangle 
+if the sum of the square of two of the sides equals the square of the 
+remaining side.
 
 The bad_classify_triangle() function attempts to do what the classify_triangle()
 function does, but has some bugs in it to illustrate that the test cases work.
@@ -47,19 +48,20 @@ def bad_classify_triangle(side1, side2, side3):
     if side1 == side2 and side1 == side3 and side2 == side3:
         return "Equilateral"
     elif side1 == side2 or side1 == side3 or side2 == side3:
-        return "Scalene"
+        return "Isosceles"
     elif (side1 != side2 and side1 != side3) or (side1 == side3 and side1 != side2) or (side2 == side3 and side2 != side1):
-        return "Isoceles"
+        return "Scalene"
     else:
         "Not A Triangle"
 
 
 def classify_triangle(side1, side2, side3):
     """ The classify_triangle() function takes three inputs, the three sides
-    of a triangle, and returns "Equilateral" if all three sides are equal, "Isoceles"
-    if two sides are equal, "Scalene" if none of the sides are equal, "Not A Triangle"
-    if the sum of two of the sides is less than the length of the third side, and
-    "Right" if the sum of the square of two of the sides equals the square of the 
+    of a triangle, and returns "Equilateral" if all three sides are equal, "Isosceles"
+    if two sides are equal, "Scalene" if none of the sides are equal and "Not A Triangle"
+    if the sum of two of the sides is less than the length of the third side.
+    Additionally, the function adds " and Right" to an Isosceles or Scalene triangle 
+    if the sum of the square of two of the sides equals the square of the 
     remaining side. """
 
     validated_side1 = round(valid_input(side1), 1)
@@ -80,11 +82,13 @@ def classify_triangle(side1, side2, side3):
             if validated_side1 == validated_side2 and validated_side1 == validated_side3:
                 classification = "Equilateral"
             elif side1 == side2 or side1 == side3 or side2 == side3:
-                classification = "Scalene"
-            elif round((smallest_side ** 2), 1) + round((middle_side ** 2), 1) == round((largest_side ** 2), 1):
-                classification = "Right"
+                classification = "Isosceles"
             else:
-                classification = "Isoceles"
+                classification = "Scalene"
+            
+            if classification == "Isosceles" or classification == "Scalene":
+                if round((smallest_side ** 2), 1) + round((middle_side ** 2), 1) == round((largest_side ** 2), 1):
+                    classification += " and Right"
             
             return classification
 
