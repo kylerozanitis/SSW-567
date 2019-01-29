@@ -7,6 +7,7 @@ SSW-567
 
 # Library Imports
 import unittest
+import math as m
 
 # File Imports
 import classify_triangle as ct
@@ -29,9 +30,9 @@ class TestValidInput(unittest.TestCase):
         works as expected. """
 
         self.assertEqual(ct.bad_classify_triangle(3,3,3), "Equilateral")
-        self.assertEqual(ct.bad_classify_triangle(3,4,5), "Isoceles")
+        self.assertEqual(ct.bad_classify_triangle(3,4,5), "Scalene")
         self.assertNotEqual(ct.bad_classify_triangle(7,24,25), "Right")
-        self.assertEqual(ct.bad_classify_triangle(3,3,5), "Scalene")
+        self.assertEqual(ct.bad_classify_triangle(3,3,5), "Isosceles")
         self.assertNotEqual(ct.bad_classify_triangle(3,4,"huh"), "Not A Triangle")
     
     def test_classify_triangle(self):
@@ -39,9 +40,10 @@ class TestValidInput(unittest.TestCase):
         as expected and fixes the errors with the bad_classify_triangle funciton. """
 
         self.assertEqual(ct.classify_triangle(3.0, 3, 3.0001), "Equilateral")
-        self.assertEqual(ct.classify_triangle(3.0, 3, 5), "Scalene")
-        self.assertEqual(ct.classify_triangle(7.0, 24.003, 25), "Right")
-        self.assertEqual(ct.classify_triangle(4, 6, 9), "Isoceles")
+        self.assertEqual(ct.classify_triangle(3.0, 3, 5), "Isosceles")
+        self.assertEqual(ct.classify_triangle(1.0, 1, m.sqrt(2)), "Isosceles and Right")
+        self.assertEqual(ct.classify_triangle(7.0, 24.003, 25), "Scalene and Right")
+        self.assertEqual(ct.classify_triangle(4, 6, 9), "Scalene")
         self.assertEqual(ct.classify_triangle(4, 6, "huh"), "One of your inputs in invalid. Please enter three integers or floats.")
 
 
